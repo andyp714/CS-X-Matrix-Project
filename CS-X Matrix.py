@@ -4,7 +4,7 @@ class Matrix():
     def __init__(self, rowNumber, columnNumber, matrixArray):
         self.rowNumber = rowNumber
         self.columnNumber = columnNumber
-        self.array = array
+        self.array = matrixArray
 
     def printMatrix(self):
         for row in self.array:
