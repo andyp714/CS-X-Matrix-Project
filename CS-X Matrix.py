@@ -1,7 +1,7 @@
 print("hello world")
 
 class Matrix():
-    def __init__(self, rowNumber, columnNumber, array):
+    def __init__(self, rowNumber, columnNumber, matrixArray):
         self.rowNumber = rowNumber
         self.columnNumber = columnNumber
         self.array = array
