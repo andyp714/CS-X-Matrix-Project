@@ -1,4 +1,3 @@
-print("hello world")
 
 class Matrix():
     def __init__(self, rowSize, columnSize, matrixArray):
@@ -38,5 +37,7 @@ m2 = Matrix(3,2, [[3,3],
 m1.printMatrix()
 print('')
 m1.scalarTimesRow(2,3)
+m2.scalarTimesRow(2,3)
+m1.plusMatrix(m2)
 m1.printMatrix()
 
