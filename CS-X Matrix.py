@@ -17,3 +17,4 @@ class Matrix():
 
 m1 = Matrix(3,2, [[2,1],[1,2], [0,1]])
 m1.printMatrix()
+print("test")
