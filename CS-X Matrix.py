@@ -26,6 +26,15 @@ class Matrix():
             self.array[rowTarget-1][index] *= scalar
 
 
+    def matrixMultiply(self, m2):
+        if self.columnSize == m2.rowSize:
+            for indexRow, row in enumerate(self.array):
+                for indexCol, col in enumerate(row):
+                    pass
+        else:
+            print("Unable to multiply: Column size does not match row size. ")
+
+
 
 
 m1 = Matrix(3,2, [[5,6],
@@ -35,9 +44,5 @@ m2 = Matrix(3,2, [[3,3],
                   [3,3],
                   [1,4]])
 m1.printMatrix()
-print('')
-m1.scalarTimesRow(2,3)
-m2.scalarTimesRow(2,3)
-m1.plusMatrix(m2)
-m1.printMatrix()
-print("test")
+m1.matrixMultiply(m2)
+
