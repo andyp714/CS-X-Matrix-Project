@@ -55,6 +55,10 @@ class Matrix():
         else:
             print("Unable to multiply: Column size does not match row size. ")
 
+    def rowAdittion(self, rowTarget, rowSelect, rowScalar):
+        for index in range(len(self.array[rowTarget-1])):
+            self.array[rowTarget-1][index] += (self.array[rowSelect-1][index] * rowScalar)
+
 
 
 
@@ -65,6 +69,8 @@ m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
 #m1.printMatrix()
-m1.matrixMultiply(m1)
+#m1.matrixMultiply(m1)
+#m1.printMatrix()
+m1.rowAdittion(2,3,4)
 m1.printMatrix()
 
