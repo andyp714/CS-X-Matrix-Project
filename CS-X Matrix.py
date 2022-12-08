@@ -11,6 +11,7 @@ class Matrix():
                 print(item, end=' ')
 
             print('')
+        print('')
 
     def plusMatrix(self, m2):
         if self.rowSize == m2.rowSize and self.columnSize == m2.columnSize:
@@ -68,7 +69,7 @@ m1 = Matrix(3,3, [[1,2,3],
 m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
-#m1.printMatrix()
+m1.printMatrix()
 #m1.matrixMultiply(m1)
 #m1.printMatrix()
 m1.rowAdittion(2,3,4)
