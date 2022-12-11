@@ -24,7 +24,7 @@ class Matrix():
 
     def scalarTimesRow(self, scalar, rowTarget):
         for index, item in enumerate(self.array[rowTarget-1]):
-            self.array[rowTarget-1][index] *= scalar
+            self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] * scalar, 3)
 
 
     def matrixMultiply(self, m2):
@@ -58,20 +58,67 @@ class Matrix():
 
     def rowAdittion(self, rowTarget, rowSelect, rowScalar):
         for index in range(len(self.array[rowTarget-1])):
-            self.array[rowTarget-1][index] += (self.array[rowSelect-1][index] * rowScalar)
+            self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3)
+
+
+    def switchRows(self,targetOne, targetTwo):
+        if targetOne <= len(self.array) and targetTwo <= len(self.array):
+            tempRow = self.array[targetOne-1]
+
+            self.array[targetOne-1] = self.array[targetTwo-1]
+            self.array[targetTwo-1] = tempRow
+        else:
+            print("Error: Target row does not exist")
+
+    def inverseMatrix(self):
+        if self.rowSize == self.columnSize:
+            #checks if square matrix
+            identityArray = []
+            for i in range(self.rowSize):
+                tempRow = []
+                for j in range(self.columnSize):
+                    if i == j:
+                        tempRow.append(1)
+                    else:
+                        tempRow.append(0)
+                identityArray.append(tempRow)
+            identityMatrix = Matrix(self.rowSize,  self.columnSize, identityArray)
+            #Sets up the identity matrix
+
+            if self.array[0][0] == 1:
+                pass
+            elif self.array[0][0] == 0:
+                for indexRow, row in enumerate(self.array):
+                    if row[0] != 0:
+                        self.switchRows(1, indexRow+1)
+                        identityMatrix.switchRows(1, indexRow+1)
+                        break
+            #makes it so that (0,0) is a non zero number
+
+
+            #ORDER OF SOLVING FOR: (0,0) (1,0) (2,0) (1,1) (2,1) (2,2)
+            #Staircase down, go column by column
+
+            #If target is 1, and the number is  not zero, multiply the row by 1/number
+            #if target is 1 and the number is zero, find a row where the same column has a non zero number and the numbers before it are zero and add that row so it makes it one
+            #If target is 0 and in the jth  column, subtract the row by number * rj, because j,j will be 1, because work downwards
 
 
 
 
-m1 = Matrix(3,3, [[1,2,3],
-                  [6,5,4],
-                  [7,9,8]])
+
+        else:
+            print("Error: Not a square matrix; inverse does not exist")
+
+
+
+
+
+m1 = Matrix(3,3, [[1,0,3],
+                  [1,0,4],
+                  [1,5,3]])
 m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
 m1.printMatrix()
-#m1.matrixMultiply(m1)
-#m1.printMatrix()
-m1.rowAdittion(2,3,4)
-m1.printMatrix()
-
+m1.inverseMatrix()
