@@ -24,7 +24,10 @@ class Matrix():
 
     def scalarTimesRow(self, scalar, rowTarget):
         for index, item in enumerate(self.array[rowTarget-1]):
-            self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] * scalar, 3)
+            if round(self.array[rowTarget-1][index] * scalar, 3) == 0:
+                self.array[rowTarget-1][index] = abs(round(self.array[rowTarget-1][index] * scalar, 3))
+            else:
+                self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] * scalar, 3)
 
 
     def matrixMultiply(self, m2):
@@ -56,9 +59,12 @@ class Matrix():
         else:
             print("Unable to multiply: Column size does not match row size. ")
 
-    def rowAdittion(self, rowTarget, rowSelect, rowScalar):
+    def rowAddition(self, rowTarget, rowSelect, rowScalar):
         for index in range(len(self.array[rowTarget-1])):
-            self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3)
+            if round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3) == 0:
+                self.array[rowTarget-1][index] = abs(round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3))
+            else:
+                self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3)
 
 
     def switchRows(self,targetOne, targetTwo):
@@ -93,15 +99,29 @@ class Matrix():
                         self.switchRows(1, indexRow+1)
                         identityMatrix.switchRows(1, indexRow+1)
                         break
-            #makes it so that (0,0) is a non zero number
+            
+            counter = 0
+            for indexCol in range(self.columnSize):
+                indexRow = indexCol
+                for value in [i[indexCol] for i in self.array][counter:]:
+                    if indexRow == indexCol:
+                        if value != 0:
+                            self.scalarTimesRow(1/value, indexRow+1)
+                        else:
+                            for indextempRow, row in enumerate(self.array[indexRow+1:]):
+                                if row[indexCol] != 0:
+                                    break
+                            self.rowAddition(indexRow+1, indextempRow + indexRow + 2, 1/row[indexCol])
+                    else:
+                        if value != 0 and self.array[indexCol][indexCol] == 1:
+                            self.rowAddition(indexRow+1, indexCol+1, -value)
+
+                    indexRow += 1
+                counter += 1
+            
+                self.printMatrix()
 
 
-            #ORDER OF SOLVING FOR: (0,0) (1,0) (2,0) (1,1) (2,1) (2,2)
-            #Staircase down, go column by column
-
-            #If target is 1, and the number is  not zero, multiply the row by 1/number
-            #if target is 1 and the number is zero, find a row where the same column has a non zero number and the numbers before it are zero and add that row so it makes it one
-            #If target is 0 and in the jth  column, subtract the row by number * rj, because j,j will be 1, because work downwards
 
 
 
@@ -114,9 +134,9 @@ class Matrix():
 
 
 
-m1 = Matrix(3,3, [[1,0,3],
-                  [1,0,4],
-                  [1,5,3]])
+m1 = Matrix(3,3, [[1,2,3],
+                  [6,5,6],
+                  [9,8,9]])
 m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
