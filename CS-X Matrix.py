@@ -120,7 +120,7 @@ class Matrix():
                         indexRow += 1
                     counter += 1
 
-                    self.printMatrix()
+                    #self.printMatrix()
 
                 for indexRow in range(self.rowSize-1, -1, -1):
                     for temp in range(0, self.columnSize - indexRow - 1):
@@ -130,25 +130,26 @@ class Matrix():
                             self.rowAddition(indexRow+1, indexCol + 1, -value)
 
                 self.printMatrix()
+
+            else:
+                print("Error: Not a square matrix; inverse does not exist")
         except:
-            print("Matrix Not Invertible")
+            print("Inverse does not exist")
 
 
 
 
 
 
-        else:
-            print("Error: Not a square matrix; inverse does not exist")
 
 
 
 
 
-m1 = Matrix(4,4, [[1,2,3,4],
-                  [6,5,6,7],
-                  [9,8,9,10],
-                  [11,12,23,14]])
+
+m1 = Matrix(3,3, [[1,4,3],
+                  [4,5,6],
+                  [7,8,9]])
 m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
