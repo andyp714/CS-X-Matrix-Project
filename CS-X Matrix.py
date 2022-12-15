@@ -77,59 +77,61 @@ class Matrix():
             print("Error: Target row does not exist")
 
     def inverseMatrix(self):
-        if self.rowSize == self.columnSize:
-            #checks if square matrix
-            identityArray = []
-            for i in range(self.rowSize):
-                tempRow = []
-                for j in range(self.columnSize):
-                    if i == j:
-                        tempRow.append(1)
-                    else:
-                        tempRow.append(0)
-                identityArray.append(tempRow)
-            identityMatrix = Matrix(self.rowSize,  self.columnSize, identityArray)
-            #Sets up the identity matrix
-
-            if self.array[0][0] == 1:
-                pass
-            elif self.array[0][0] == 0:
-                for indexRow, row in enumerate(self.array):
-                    if row[0] != 0:
-                        self.switchRows(1, indexRow+1)
-                        identityMatrix.switchRows(1, indexRow+1)
-                        break
-            
-            counter = 0
-            for indexCol in range(self.columnSize):
-                indexRow = indexCol
-                for value in [i[indexCol] for i in self.array][counter:]:
-                    if indexRow == indexCol:
-                        if value != 0:
-                            self.scalarTimesRow(1/value, indexRow+1)
+        try:
+            if self.rowSize == self.columnSize:
+                #checks if square matrix
+                identityArray = []
+                for i in range(self.rowSize):
+                    tempRow = []
+                    for j in range(self.columnSize):
+                        if i == j:
+                            tempRow.append(1)
                         else:
-                            for indextempRow, row in enumerate(self.array[indexRow+1:]):
-                                if row[indexCol] != 0:
-                                    break
-                            self.rowAddition(indexRow+1, indextempRow + indexRow + 2, 1/row[indexCol])
-                    else:
-                        if value != 0 and self.array[indexCol][indexCol] == 1:
-                            self.rowAddition(indexRow+1, indexCol+1, -value)
+                            tempRow.append(0)
+                    identityArray.append(tempRow)
+                identityMatrix = Matrix(self.rowSize,  self.columnSize, identityArray)
+                #Sets up the identity matrix
 
-                    indexRow += 1
-                counter += 1
-            
+                if self.array[0][0] == 1:
+                    pass
+                elif self.array[0][0] == 0:
+                    for indexRow, row in enumerate(self.array):
+                        if row[0] != 0:
+                            self.switchRows(1, indexRow+1)
+                            identityMatrix.switchRows(1, indexRow+1)
+                            break
+
+                counter = 0
+                for indexCol in range(self.columnSize):
+                    indexRow = indexCol
+                    for value in [i[indexCol] for i in self.array][counter:]:
+                        if indexRow == indexCol:
+                            if value != 0:
+                                self.scalarTimesRow(1/value, indexRow+1)
+                            else:
+                                for indextempRow, row in enumerate(self.array[indexRow+1:]):
+                                    if row[indexCol] != 0:
+                                        break
+                                self.rowAddition(indexRow+1, indextempRow + indexRow + 2, 1/row[indexCol])
+                        else:
+                            if value != 0 and self.array[indexCol][indexCol] == 1:
+                                self.rowAddition(indexRow+1, indexCol+1, -value)
+
+                        indexRow += 1
+                    counter += 1
+
+                    self.printMatrix()
+
+                for indexRow in range(self.rowSize-1, -1, -1):
+                    for temp in range(0, self.columnSize - indexRow - 1):
+                        indexCol = self.columnSize - temp - 1
+                        value = self.array[indexRow][indexCol]
+                        if self.array[indexRow][indexCol] != 0:
+                            self.rowAddition(indexRow+1, indexCol + 1, -value)
+
                 self.printMatrix()
-
-            for indexRow in range(self.rowSize-1, -1, -1):
-                #print(indexRow)
-                for temp in range(0, self.columnSize - indexRow - 1):
-                    indexCol = self.columnSize - temp - 1
-                    value = self.array[indexRow][indexCol]
-                    if self.array[indexRow][indexCol] != 0:
-                        self.rowAddition(indexRow+1, indexCol + 1, -value)
-
-            self.printMatrix()
+        except:
+            print("Matrix Not Invertible")
 
 
 
