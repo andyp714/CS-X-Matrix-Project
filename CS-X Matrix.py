@@ -121,6 +121,15 @@ class Matrix():
             
                 self.printMatrix()
 
+            for indexRow in range(self.rowSize-1, -1, -1):
+                #print(indexRow)
+                for temp in range(0, self.columnSize - indexRow - 1):
+                    indexCol = self.columnSize - temp - 1
+                    value = self.array[indexRow][indexCol]
+                    if self.array[indexRow][indexCol] != 0:
+                        self.rowAddition(indexRow+1, indexCol + 1, -value)
+
+            self.printMatrix()
 
 
 
@@ -135,9 +144,9 @@ class Matrix():
 
 
 m1 = Matrix(4,4, [[1,2,3,4],
-                  [6,5,6,5],
-                  [9,8,9,8],
-                  [1,2,3,7]])
+                  [6,5,6,7],
+                  [9,8,9,10],
+                  [11,12,23,14]])
 m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
