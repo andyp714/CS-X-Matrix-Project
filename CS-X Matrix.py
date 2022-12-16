@@ -1,8 +1,8 @@
 
 class Matrix():
-    def __init__(self, rowSize, columnSize, matrixArray):
-        self.rowSize = rowSize
-        self.columnSize = columnSize
+    def __init__(self, matrixArray):
+        self.rowSize = len(matrixArray)
+        self.columnSize = len(matrixArray[0])
         self.array = matrixArray
 
     def printMatrix(self):
@@ -89,7 +89,7 @@ class Matrix():
                         else:
                             tempRow.append(0)
                     identityArray.append(tempRow)
-                identityMatrix = Matrix(self.rowSize,  self.columnSize, identityArray)
+                identityMatrix = Matrix(identityArray)
                 #Sets up the identity matrix
 
                 if self.array[0][0] == 1:
@@ -133,7 +133,7 @@ class Matrix():
                             self.rowAddition(indexRow+1, indexCol + 1, -value)
                             identityMatrix.rowAddition(indexRow+1, indexCol+1,-value)
 
-                self.printMatrix()
+                #self.printMatrix()
                 for indexRow, row in enumerate(identityMatrix.array):
                     for indexCol, col in enumerate(row):
                         identityMatrix.array[indexRow][indexCol] = round(identityMatrix.array[indexRow][indexCol],3)
@@ -154,14 +154,39 @@ class Matrix():
 
 
 
+def main():
 
+    print("Matrix Operations By Andy Pauley")
+    matrixNumber = int(input("How many matrices would you like to enter?"))
+    print('')
+    listMatrices = []
+    for k in range(1,matrixNumber+1):
+        print("Matrix #" + str(k))
+        rowSize = int(input("Input how many rows > "))
+        colSize = int(input("Input how many columns > "))
+        tempArray = []
+        for i in range(1,rowSize+1):
+            tempRow = []
+            for j in range(1,colSize+1):
+                inputValue = int(input("Input Value for (" + str(i) + ',' + str(j) + ") > "))
+                tempRow.append(inputValue)
+            tempArray.append(tempRow)
+        tempClass = Matrix(tempArray)
+        tempClass.printMatrix()
+        print('', end='')
+        listMatrices.append(tempClass)
 
-m1 = Matrix(4,4, [[4,11,2,8],
-                  [-1,2,3,4],
-                  [5,9,10,12],
-                  [8,13,14,7]])
-m2 = Matrix(3,2, [[10,11],
-                  [20,21],
-                  [30,31]])
-m1.printMatrix()
-m1.inverseMatrix()
+        
+
+    m1 = Matrix([[4,11,2,8],
+                [-1,2,3,4],
+                [5,9,10,12],
+                [8,13,14,7]])
+    m2 = Matrix([[10,11],
+                [20,21],
+                [30,31]])
+    #m1.printMatrix()
+    #m1.inverseMatrix()
+
+if __name__ == "__main__":
+    main()
