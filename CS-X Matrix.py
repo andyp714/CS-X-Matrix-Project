@@ -25,9 +25,9 @@ class Matrix():
     def scalarTimesRow(self, scalar, rowTarget):
         for index, item in enumerate(self.array[rowTarget-1]):
             if round(self.array[rowTarget-1][index] * scalar, 3) == 0:
-                self.array[rowTarget-1][index] = abs(round(self.array[rowTarget-1][index] * scalar, 3))
+                self.array[rowTarget-1][index] = abs(round(self.array[rowTarget-1][index] * scalar, 5))
             else:
-                self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] * scalar, 3)
+                self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] * scalar, 5)
 
 
     def matrixMultiply(self, m2):
@@ -62,9 +62,9 @@ class Matrix():
     def rowAddition(self, rowTarget, rowSelect, rowScalar):
         for index in range(len(self.array[rowTarget-1])):
             if round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3) == 0:
-                self.array[rowTarget-1][index] = abs(round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3))
+                self.array[rowTarget-1][index] = abs(round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),5))
             else:
-                self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),3)
+                self.array[rowTarget-1][index] = round(self.array[rowTarget-1][index] + (self.array[rowSelect-1][index] * rowScalar),5)
 
 
     def switchRows(self,targetOne, targetTwo):
@@ -108,14 +108,17 @@ class Matrix():
                         if indexRow == indexCol:
                             if value != 0:
                                 self.scalarTimesRow(1/value, indexRow+1)
+                                identityMatrix.scalarTimesRow(1/value, indexRow+1)
                             else:
                                 for indextempRow, row in enumerate(self.array[indexRow+1:]):
                                     if row[indexCol] != 0:
                                         break
                                 self.rowAddition(indexRow+1, indextempRow + indexRow + 2, 1/row[indexCol])
+                                identityMatrix.rowAddition(indexRow+1, indextempRow + indexRow + 2, 1/row[indexCol])
                         else:
                             if value != 0 and self.array[indexCol][indexCol] == 1:
                                 self.rowAddition(indexRow+1, indexCol+1, -value)
+                                identityMatrix.rowAddition(indexRow+1, indexCol+1,-value)
 
                         indexRow += 1
                     counter += 1
@@ -128,8 +131,14 @@ class Matrix():
                         value = self.array[indexRow][indexCol]
                         if self.array[indexRow][indexCol] != 0:
                             self.rowAddition(indexRow+1, indexCol + 1, -value)
+                            identityMatrix.rowAddition(indexRow+1, indexCol+1,-value)
 
                 self.printMatrix()
+                for indexRow, row in enumerate(identityMatrix.array):
+                    for indexCol, col in enumerate(row):
+                        identityMatrix.array[indexRow][indexCol] = round(identityMatrix.array[indexRow][indexCol],3)
+
+                identityMatrix.printMatrix()
 
             else:
                 print("Error: Not a square matrix; inverse does not exist")
@@ -147,9 +156,10 @@ class Matrix():
 
 
 
-m1 = Matrix(3,3, [[1,4,3],
-                  [4,5,6],
-                  [7,8,9]])
+m1 = Matrix(4,4, [[4,11,2,8],
+                  [-1,2,3,4],
+                  [5,9,10,12],
+                  [8,13,14,7]])
 m2 = Matrix(3,2, [[10,11],
                   [20,21],
                   [30,31]])
