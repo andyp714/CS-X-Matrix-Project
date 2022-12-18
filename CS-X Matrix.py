@@ -176,17 +176,30 @@ def main():
         print('', end='')
         listMatrices.append(tempClass)
 
-        
+    continuation  = True
+    while continuation == True:
+        print("Choose Function:")
+        print('[1] Print Matrix')
+        print('[2] Add Matrices')
+        print('[3] Multiply row by scalar')
+        print('[4] Multiply two matrices')
+        print('[5] Add one row multiplied by a scalar to another row')
+        print('[6] Switch Rows')
+        print('[7] Find the inverse')
+        print('[8] Row reduce')
+        functionChoice = int(input(" > "))
 
-    m1 = Matrix([[4,11,2,8],
-                [-1,2,3,4],
-                [5,9,10,12],
-                [8,13,14,7]])
-    m2 = Matrix([[10,11],
-                [20,21],
-                [30,31]])
-    #m1.printMatrix()
-    #m1.inverseMatrix()
+        if functionChoice == 1:
+            print("Which matrix do you want to print?")
+            for index, item in enumerate(listMatrices):
+                print('Matrix [' + str(index+1) + ']', item.array)
+            matrixChoice = int(input(" > ")) - 1
+            listMatrices[matrixChoice].printMatrix()
+
+        if functionChoice == 2:
+            print("Which matrices would you like to add?")
+            for index, item in enumerate(listMatrices):
+                print('Matrix [' + str(index + 1) + ']', item.array)
 
 if __name__ == "__main__":
     main()
