@@ -168,7 +168,7 @@ def main():
         for i in range(1,rowSize+1):
             tempRow = []
             for j in range(1,colSize+1):
-                inputValue = int(input("Input Value for (" + str(i) + ',' + str(j) + ") > "))
+                inputValue = int(input("Input Value for (" + str(i) + ',' + str(j) + ") > "), 3)
                 tempRow.append(inputValue)
             tempArray.append(tempRow)
         tempClass = Matrix(tempArray)
