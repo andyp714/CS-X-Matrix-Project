@@ -15,12 +15,15 @@ class Matrix():
 
     def plusMatrix(self, m2):
         if self.rowSize == m2.rowSize and self.columnSize == m2.columnSize:
-            for indexRow, row in enumerate(self.array):
+            tempMatrix = self
+            for indexRow, row in enumerate(tempMatrix):
                 #print("ROW", indexRow, ":", row)
                 for indexCol, item in enumerate(row):
-                    self.array[indexRow][indexCol] += m2.array[indexRow][indexCol]
+                    tempMatrix.array[indexRow][indexCol] += m2.array[indexRow][indexCol]
+            return(tempMatrix)
         else:
-            print("Not Same Size, Addition can't be performed")
+            return(False)
+
 
     def scalarTimesRow(self, scalar, rowTarget):
         for index, item in enumerate(self.array[rowTarget-1]):
@@ -168,7 +171,7 @@ def main():
         for i in range(1,rowSize+1):
             tempRow = []
             for j in range(1,colSize+1):
-                inputValue = int(input("Input Value for (" + str(i) + ',' + str(j) + ") > "), 3)
+                inputValue = round(float(input("Input Value for (" + str(i) + ',' + str(j) + ") > ")),3)
                 tempRow.append(inputValue)
             tempArray.append(tempRow)
         tempClass = Matrix(tempArray)
@@ -187,6 +190,7 @@ def main():
         print('[6] Switch Rows')
         print('[7] Find the inverse')
         print('[8] Row reduce')
+        print('[9] Quit')
         functionChoice = int(input(" > "))
 
         if functionChoice == 1:
@@ -200,6 +204,8 @@ def main():
             print("Which matrices would you like to add?")
             for index, item in enumerate(listMatrices):
                 print('Matrix [' + str(index + 1) + ']', item.array)
+            firstChoice = int(input('1st Matrix > '))
+            secondChoice = int(input('2nd Matrix > '))
 
 if __name__ == "__main__":
     main()
