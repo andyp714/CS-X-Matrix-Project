@@ -16,7 +16,7 @@ class Matrix():
     def plusMatrix(self, m2):
         if self.rowSize == m2.rowSize and self.columnSize == m2.columnSize:
             tempMatrix = self
-            for indexRow, row in enumerate(tempMatrix):
+            for indexRow, row in enumerate(tempMatrix.array):
                 #print("ROW", indexRow, ":", row)
                 for indexCol, item in enumerate(row):
                     tempMatrix.array[indexRow][indexCol] += m2.array[indexRow][indexCol]
@@ -198,14 +198,34 @@ def main():
             for index, item in enumerate(listMatrices):
                 print('Matrix [' + str(index+1) + ']', item.array)
             matrixChoice = int(input(" > ")) - 1
+            print("Matrix " + str(matrixChoice+1) + ':')
             listMatrices[matrixChoice].printMatrix()
 
         if functionChoice == 2:
             print("Which matrices would you like to add?")
             for index, item in enumerate(listMatrices):
                 print('Matrix [' + str(index + 1) + ']', item.array)
-            firstChoice = int(input('1st Matrix > '))
-            secondChoice = int(input('2nd Matrix > '))
+            firstChoice = int(input('1st Matrix > ')) -1
+            secondChoice = int(input('2nd Matrix > ')) -1
+            tempMatrix = listMatrices[firstChoice].plusMatrix(listMatrices[secondChoice])
+            if tempMatrix != False:
+                print("Result:")
+                tempMatrix.printMatrix()
+                appendQuestion = input("Do you want to append the result to the list of matrices? [N] for no action. [A] for append.")
+                if appendQuestion == 'N':
+                    pass
+                elif appendQuestion == 'A':
+                    listMatrices.append(tempMatrix)
+                    print("Matrix Appended")
+                else:
+                    print("Error: Incorrect Input")
+            else:
+                print("Matrices are not the same size; Addition can't be performed")
+
+        if functionChoice == 9:
+            continuation = False
+            print("Quitted")
+            
 
 if __name__ == "__main__":
     main()
